@@ -20,9 +20,24 @@ Category.hasMany(Product, {
 // https://sequelize.org/docs/v6/core-concepts/assocs/
 
 // Products belongToMany Tags (through ProductTag)
-Product.belongsToMany(Tag, { through: ProductTag });
+Product.belongsToMany(Tag, {
+   through: {
+    model: ProductTag,
+    unique: false
+   },
+   // alias defined for data retrieval
+   as: 'tag_product'
+   });
+   
 // Tags belongToMany Products (through ProductTag)
-Tag.belongsToMany(Product, { through: ProductTag });
+Tag.belongsToMany(Product, {
+   through: {
+    model: ProductTag,
+    unique: false
+   },
+   // alias defined for data retrieval
+   as: 'product_tag'
+   });
 
 module.exports = {
   Product,
