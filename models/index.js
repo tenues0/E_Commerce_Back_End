@@ -7,36 +7,30 @@ const ProductTag = require('./ProductTag');
 // Product belongsTo Category
 Product.belongsTo(Category, {
   foreignKey: 'category_id',
+  onDelete: 'CASCADE',
 });
 // Category have many Products
 // if a Category is deleted then the Product associated
 // should be deleted
 Category.hasMany(Product, {
   foreignKey: 'category_id',
-  onDelete: 'CASCADE',
+//  onDelete: 'CASCADE',
 });
-
 
 // https://sequelize.org/docs/v6/core-concepts/assocs/
 
 // Products belongToMany Tags (through ProductTag)
 Product.belongsToMany(Tag, {
-   through: {
-    model: ProductTag,
-    unique: false
-   },
-   // alias defined for data retrieval
-   as: 'tag_product'
+    through: ProductTag,
+    foreignKey: 'product_id',
+    unique: false,
    });
    
 // Tags belongToMany Products (through ProductTag)
 Tag.belongsToMany(Product, {
-   through: {
-    model: ProductTag,
-    unique: false
-   },
-   // alias defined for data retrieval
-   as: 'product_tag'
+    through: ProductTag,
+    foreignKey: 'tag_id',
+    unique: false,
    });
 
 module.exports = {
